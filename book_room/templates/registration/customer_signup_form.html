@@ -1,0 +1,87 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <title>Customer Sign Up</title>
+     {% include 'base.html'%}
+      {% include 'navbar.html' %}
+   </head>
+   <body id="page-top">
+      {% if user.is_authenticated %}
+       <script>
+           window.location.href = "/accounts/profile/"
+       </script>
+       {% endif %}
+      <div class="container mt-5 pt-4">
+         <div class="row justify-content-center">
+            <div class="col-lg-10">
+               <div class="card">
+                  <div class="card-title">
+                     <h4>Sign Up as a Customer</h4>
+                     <br><br>
+                  </div>
+                  <div class="card-body">
+                     <div class="basic-form">
+                        <form method="post" action="{% url 'accounts:customer_signup' %}">
+                           {% csrf_token %}
+                            <input type="hidden" name="next" value="{{next}}">
+
+                            <div class="form-group">
+                                <label for="username">Username</label>
+                                <input input type="text" class="form-control" name="username" required id="username" required>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col">
+                                        <label for="first_name">First Name</label>
+                                        <input type="text" id="first_name" class="form-control"  required name="first_name" required>
+                                    </div>
+                                    <div class="col">
+                                        <label for="last_name">Last Name</label>
+                                        <input type="text" id="last_name" class="form-control"  required name="last_name" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col">
+                                        <label for="first_name">Email</label>
+                                <input type="email" id="email" class="form-control"  required name="email" required>
+                                    </div>
+                                    <div class="col">
+                                        <label for="last_name">Phone Number</label>
+                                <input type="text" id="phone" maxlength="10" class="form-control" required name="phone"  required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col">
+                                        <label for="first_name">Password</label>
+                                  <input type="password" id="password1" class="form-control"  required name="password1" required>
+                                    </div>
+                                    <div class="col">
+                                        <label for="last_name">Confirm Password</label>
+                                  <input type="password" id="password2" class="form-control"  required name="password2" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="button btn-success" style="cursor:pointer">Submit</button>
+                        </form>
+
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/grayscale.min.js' %}"></script>
+</body>

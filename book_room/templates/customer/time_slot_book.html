@@ -1,0 +1,128 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <title>Time Slot Booking</title>
+     {% include 'base.html'%}
+     {% include 'navbar.html' %}
+   </head>
+{% if error_msg %}
+<div class="alert alert-primary">
+          {{error_msg}}
+</div>
+{% else %}
+<div class="container-fluid mt-5 pt-4">
+        <br>
+          <div class="row">
+              <div class="col-lg-3"></div>
+                <div class="col-lg-6">
+            {% if messages %}
+              {% for message in messages %}
+              <div class="alert alert-warning alert-dismissible text-center" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="cursor:pointer"><span aria-hidden="true">&times;</span></button>
+                <strong>{% if message.level == DEFAULT_MESSAGE_LEVELS.INFO %}Info{% else %}{{ message.tags|title }}{% endif %}!</strong> {{ message }}
+              </div>
+              {% endfor %}
+            {% endif %}
+          </div>
+         </div>
+      <div class="row">
+        <div class="col-lg-6">
+                <div class="card">
+                <div class="card-title">
+                    <h4>Booked Time Slot</h4>
+                </div>
+                    {% if booked %}
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover ">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Manager Name</th>
+                                    <th>Manager Details</th>
+                                    <th>Date</th>
+                                    <th>Time Slot</th>
+                                    <th>Room Name</th>
+                                    <th>Cancelled</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for x in booked %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td>{{x.manager_id.first_name}} {{x.manager_id.last_name}} </td>
+                                        <td>
+                                            {{x.manager_id.email}}
+                                            <br>
+                                            +91 {{x.manager_id.phone}}
+                                        </td>
+                                        <td>{{x.date}}</td>
+                                        <td>{{x.start_time | time:"h:i:s"}} - {{x.end_time | time:"h:i:s"}}</td>
+                                        <td>{{x.room_id}}</td>
+                                        <td>
+                                            <form action="{% url 'customer:cancel' %}" method="POST">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="slot_id" value="{{x.id}}" />
+                                                <input type="submit" value="Cancel" class="button btn-success" style="cursor:pointer">
+                                            </form>
+                                        </td>
+                                    </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                    {% else %}
+                    <div class="card-body">
+                        No Time Slots is Booked.
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+        <div class="card">
+            <div class="card-title">
+                <h4>Cancelled Time Slot</h4>
+            </div>
+            {% if cancelled %}
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover ">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Manager Name</th>
+                                <th>Date</th>
+                                <th>Time Slot</th>
+                                <th>Room Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for x in cancelled %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{x.manager_id}}</td>
+                                <td>{{x.date}}</td>
+                                <td>{{x.start_time | time:"h:i:s"}} - {{x.end_time | time:"h:i:s"}}</td>
+                                <td>{{x.room_id}}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            {% else %}
+                    <div class="card-body">
+                        No Time Slots is Cancelled.
+                    </div>
+                {% endif %}
+        </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+   {% include 'manager/scripts.html'%}

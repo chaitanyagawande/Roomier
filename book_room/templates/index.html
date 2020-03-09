@@ -1,0 +1,104 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Welcome To Roomier</title>
+  {% include 'base.html' %}
+</head>
+
+<body id="page-top">
+  {% include 'navbar.html' %}
+  <header class="masthead">
+    <div class="container d-flex h-100 align-items-center">
+      <div class="mx-auto text-center">
+        <h3 class="mx-auto my-0 text-uppercase">Roomier</h3>
+        <h2 class="text-white-50 mx-auto mt-2 mb-3 text-white" >A free website developed for booking time slots as per the demand of the customer.</h2>
+        <a href="{% url 'customer:search_time_slot'%}" class="btn btn-primary js-scroll-trigger">Get Started</a>
+      </div>
+    </div>
+  </header>
+
+  <section id="projects" class="projects-section bg-light">
+    <div class="container">
+      <div class="row align-items-center no-gutters mb-4 mb-lg-5">
+        <div class="col-xl-8 col-lg-7">
+          <img class="img-fluid mb-3 mb-lg-0" src="{% static 'images/bg-office.jpg' %}" alt="">
+        </div>
+        <div class="col-xl-4 col-lg-5">
+          <div class="featured-text text-center text-lg-left">
+            <h4>Room/Corporate Space/Conference Room Booking</h4>
+            <p class="text-black-50 mb-0 text-right">
+              A Customer can book a Room and a corresponding Time Slot, once booked, the Room cannot be booked by another Customer for that Time Slot. Only Room Manager can add, delete or change his own number of Rooms and Time Slots.
+           </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+<section id="signup" class="signup-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-10 col-lg-8 mx-auto text-center">
+        <i class="fa fa-paper-plane fa-2x mb-2 text-white"></i>
+        <h2 class="text-white mb-5">
+            If you have any inquiries, feel free to Submit an email to get in touch.
+        </h2>
+        <div class="d-flex" style="font-family: 'Varela Round';" >
+          <input type="email" class="form-control mr-0 mr-sm-2 mb-3 mb-sm-0" id="inputEmail" placeholder="Enter email address...">
+          <button type="submit" class="button btn-primary mx-auto">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact-section bg-black" id="contact">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4 mb-3 mb-md-0">
+        <div class="card py-4 h-100">
+          <div class="card-body text-center">
+            <i class="fa fa-map-marker text-primary mb-2"></i>
+            <h4 class="text-uppercase m-0">Address</h4>
+            <hr class="my-4">
+            <div class="small text-black-50">Pune, Maharashtra, India</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 mb-3 mb-md-0">
+        <div class="card py-4 h-100">
+          <div class="card-body text-center">
+            <i class="fa fa-envelope text-primary mb-2"></i>
+            <h4 class="text-uppercase m-0">Email</h4>
+            <hr class="my-4">
+            <div class="small text-black-50">
+              <a href="#">roomier@gmail.com</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 mb-3 mb-md-0">
+        <div class="card py-4 h-100">
+          <div class="card-body text-center">
+            <i class="fa fa-mobile text-primary mb-2"></i>
+            <h4 class="text-uppercase m-0">Phone</h4>
+            <hr class="my-4">
+            <div class="small text-black-50">+91 4455211365</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+{% include 'manager/scripts.html' %}
+</body>
+
+</html>

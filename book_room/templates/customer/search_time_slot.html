@@ -1,0 +1,44 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <title>Welcome To Roomier</title>
+      {% include 'base.html'%}
+     {% include 'navbar.html' %}
+   </head>
+   <body id="page-top">
+   <div class="container mt-5">
+        <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="card mt-5">
+                <div class="card-title">
+                    <h4>Search Time Slot</h4><br>
+                </div>
+                <div class="card-body">
+                    <div class="basic-form">
+                        <form method="GET" action="{% url 'customer:search' %}">
+                            <div class="form-group">
+                                <label>Date</label>
+                                <input type="date" class="form-control" name="date" id="DefaultDate" value="{% now 'Y-m-d' %}">
+                            </div>
+                            <div class="form-group">
+                                <label>Start Time</label>
+                                <input type="time" class="form-control" name="start_time" value="12:00">
+                            </div>
+                            <div class="form-group">
+                                <label>End Time</label>
+                                <input type="time" class="form-control" placeholder="Enter Check Out Time" name="end_time" value="15:00">
+                            </div>
+                            <input type="submit" class="button btn-success" style="cursor:pointer;" value="Submit">
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+   {% include 'manager/scripts.html'%}
+</body>

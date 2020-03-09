@@ -1,0 +1,10 @@
+{% load staticfiles %}
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script>
+$(document).ready(function(){
+  setTimeout(function () {
+             $(".alert").hide();
+         }, 2500);
+});
+</script>

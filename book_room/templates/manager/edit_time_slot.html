@@ -1,0 +1,40 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Edit Time Slot</title>
+        {% include 'base.html'%}
+        {% include 'navbar.html' %}
+   </head>
+    <div class="container mt-5 pt-4">
+        <div class="row justify-content-center mt-5">
+        <div class="col-lg-6">
+            <div class="card mt-2">
+                <div class="card-title">
+                    <h4>Edit Time Slot</h4>
+                    <br><br>
+                </div>
+                <div class="card-body mt-2">
+                    <div class="basic-form">
+                        <form method="post" action="">
+                            {% csrf_token %}
+                            <input type="hidden" name="next" value="{{next}}">
+                            <div class="form-group">
+                                <label>Start Time</label>
+                                <input type="time" name="start_time" class="form-control" value="{{slot.start_time | time:'H:i:s'}}"  required>
+                            </div>
+                            <div class="form-group">
+                                <label>End Time</label>
+                                <input type="time" name="end_time" class="form-control"  value="{{slot.end_time | time:'H:i:s'}}"  required>
+                            </div>
+                            <button type="submit" class="button btn-success" style="cursor:pointer">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+      {% include 'manager/scripts.html'%}

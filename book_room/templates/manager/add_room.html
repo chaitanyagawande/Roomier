@@ -1,0 +1,111 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <title>Add Room</title>
+     {% include 'base.html'%}
+   </head>
+   <body id="page-top">
+      {% include 'navbar.html' %}
+        <div class="container mt-5">
+            <div class="row">
+        <div class="col-lg-3"></div>
+        <div class="col-lg-6">
+            <div class="mt-3">
+
+              <br>
+            {% if messages %}
+              {% for message in messages %}
+              <div class="alert alert-warning alert-dismissible text-center" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="cursor:pointer"><span aria-hidden="true">&times;</span></button>
+                <strong>{% if message.level == DEFAULT_MESSAGE_LEVELS.INFO %}Info{% else %}{{ message.tags|title }}{% endif %}!</strong> {{ message }}
+              </div>
+              {% endfor %}
+            {% endif %}
+
+            </div>
+        </div>
+        <div class="col-lg-3"></div>
+    </div>
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-title">
+                    <h4>Add Room</h4>
+                    <br>
+                    <br>
+                </div>
+                <div class="card-body">
+                    <div class="basic-form">
+                        <form method="post" action="{% url 'manager:create_room' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="next" value="{{ next }}">
+                            <div class="form-group">
+                                <label>Room Owner</label>
+                                <input type="text" name="room_owner" class="form-control" value="{{ user.get_username }}" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label>Room Name</label>
+                                <input type="text" name="room_name" class="form-control" placeholder="Room Name" required>
+                            </div>
+                            <button type="submit" class="button btn-success" style="cursor:pointer">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-title">
+                            <h4> List Of Rooms </h4>
+                        </div>
+                        <div class="card-body">
+                            {% if rooms %}
+                            <div class="table-responsive">
+                                <table class="table table-hover ">
+                                    <thead>
+                                        <tr>
+                                            <th>Room Name</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for x in rooms %}
+                                        <tr>
+                                            <td>
+                                                <a href="{% url 'manager:create_time_slot' x.pk  %}">{{x.room_name}}</a>
+                                            </td>
+                                            <td>
+                                                <form action="{% url 'manager:delete_room' x.id %}" method="POST">
+                                                    {% csrf_token %}
+                                                    <input type="submit" class="button btn-warning" style="cursor:pointer;" value="Delete">
+                                                </form>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            {% else %}
+                            <p>No Room Available.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        </div>
+</div>
+{% include 'manager/scripts.html'%}
+<script>
+    $(document).ready(function() {
+        setTimeout(function() {
+            $(".alert").hide();
+        }, 5000);
+    });
+</script>

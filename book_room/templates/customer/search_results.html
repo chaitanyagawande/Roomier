@@ -1,0 +1,87 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <title>Search Results</title>
+       {% include 'base.html'%}
+     {% include 'navbar.html' %}
+   </head>
+   <body>
+
+<div class="container mt-5">
+  <div class="row mt-5">
+    <div class="col-lg-12">
+        <br>
+            {% if messages %}
+              {% for message in messages %}
+              <div class="alert alert-warning alert-dismissible text-center" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="cursor:pointer"><span aria-hidden="true">&times;</span></button>
+                <strong>{% if message.level == DEFAULT_MESSAGE_LEVELS.WARNING %}Warning{% else %}{{ message.tags|title }}{% endif %}!</strong> {{ message }}
+              </div>
+              {% endfor %}
+            {% endif %}
+
+            <div class="badge badge-light" style="font-size:16px;margin-top:5px;padding-top:5px;">
+              <a href="/customer/search_time_slot/" class="alert-link">/ Customer/ Search Time Slot/</a>
+            </div>
+
+        <div class="card mt-5">
+            <div class="card-title">
+                <h4>Available Time Slots</h4>
+            </div>
+            <div class="card-body">
+                {% if time_slot %}
+                <div class="table-responsive">
+                    <table class="table table-hover ">
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>Start Time</th>
+                                <th>End Time</th>
+                                <th>Date</th>
+                                <th>Manager Name</th>
+                                <th>Room Name</th>
+                                <th>Book</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        {% for slot in time_slot %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{slot.start_time | time:"H:i:s"}}</td>
+                                <td>{{slot.end_time | time:"H:i:s" }}</td>
+                                <td>{{date}}</td>
+                                <td><span class="badge badge-primary">{{ slot.time_slot_owner }}</span></td>
+                                <td>{{ slot.room_id }}</td>
+
+                                <td>
+                                    <form action="{% url 'customer:book_slot' %}" method="POST">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="owner" value="{{ slot.time_slot_owner.id }}"/>
+                                        <input type="hidden" name="start_time" value="{{slot.start_time | time:'H:i:s'}}"/>
+                                        <input type="hidden" name="end_time" value="{{ slot.end_time | time:'H:i:s'}}"/>
+                                        <input type="hidden" name="room_id" value="{{slot.room_id.id}}"/>
+                                        <input type="hidden" name="date" value="{{date}}"/>
+                                        <input type="submit" value="Book" class="button btn-success" style="cursor:pointer">
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <hr>
+                <div class="text-center medium">
+                    No Search Results Found.
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+{% include 'manager/scripts.html' %}

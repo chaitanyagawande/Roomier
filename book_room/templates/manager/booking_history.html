@@ -1,0 +1,113 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Manager Booking History</title>
+        {% include 'base.html'%}
+        {% include 'navbar.html' %}
+   </head>
+    {% if error_msg %}
+    <div class="alert alert-primary">
+              {{error_msg}}
+    </div>
+    {% else %}
+<div class="container-fluid mt-5 pt-4">
+      <div class="row">
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-title">
+                    <h4>Booked Time Slot</h4>
+                </div>
+                {% if booked %}
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover ">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Customer Name</th>
+                                        <th>Customer Details</th>
+                                        <th>Date</th>
+                                        <th>Time Slot</th>
+                                        <th>Room Name</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {% for x in booked %}
+                                        <tr>
+                                            <td>{{ forloop.counter }}</td>
+                                            <td>{{x.customer_id.first_name}} {{x.customer_id.last_name}} </td>
+                                            <td>
+                                                {{x.customer_id.email}},
+                                                <br>
+                                                +91 {{x.customer_id.phone}}
+                                            </td>
+                                            <td>{{x.date}}</td>
+                                            <td>{{x.start_time | time:"h:i:s"}} - {{x.end_time | time:"h:i:s"}}</td>
+                                            <td>{{x.room_id}}</td>
+                                        </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                {% else %}
+                <br>
+                    <div class="card-body">
+                        <h5>No Booking Done.</h5>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+        <div class="card">
+            <div class="card-title">
+                <h4>Cancelled Time Slot</h4>
+            </div>
+                {% if cancelled %}
+                    <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover ">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Customer Name</th>
+                                    <th>Date</th>
+                                    <th>Time Slot</th>
+                                    <th>Room Name</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for x in cancelled %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{x.customer_id.first_name}} {{x.customer_id.last_name}} </td>
+                                    <td>
+                                        {{x.customer_id.email}},
+                                        <br>
+                                        +91 {{x.customer_id.phone}}
+                                    </td>
+                                    <td>{{x.date}}</td>
+                                    <td>{{x.start_time | time:"h:i:s"}} - {{x.end_time | time:"h:i:s"}}</td>
+                                    <td>{{x.room_id}}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                        <br>
+                        <div class="card-body">
+                            <h5>No Cancelled Slot Available.</h5>
+                        </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+{% include 'manager/scripts.html'%}

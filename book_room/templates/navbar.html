@@ -1,0 +1,83 @@
+ <nav class="navbar navbar-expand-lg navbar-light bg-dark fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand text-white" href="/">Roomier</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navlinks" aria-label="Toggle navigation">
+        Menu
+        <i class="fa fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navlinks">
+        <ul class="navbar-nav ml-auto">
+          {% if user.is_authenticated %}
+              {% if user.is_manager %}
+                    <li class="nav-item">
+                          <a class="nav-link text-white" href="{% url 'manager:create_room' %}">Create Room</a>
+                    </li>
+                    <li class="nav-item">
+                          <a class="nav-link text-white" href="{% url 'manager:booking_history'%}">Booking History</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle text-white" href="#" id="navbardrop" data-toggle="dropdown">
+                        {{user.username}}
+                      </a>
+                      <div class="dropdown-menu">
+                        <a class="dropdown-item " href="{% url 'accounts:profile'%}"><i class="fa fa-user"></i> Profile</a>
+                        <a class="dropdown-item" href="{% url 'password_change'%}"><i class="fa fa-key"></i> Change Password</a>
+                        <a class="dropdown-item" href="#">
+                          <i class="fa fa-power-off"></i>
+                            <span class="user-avatar" onClick="document.getElementById('logoutForm').submit()">Logout</span>
+                          <form id="logoutForm" method="POST" action="{% url 'logout' %}">
+                          {% csrf_token %}
+                          <input type="hidden">
+                          </form>
+                        </a>
+                      </div>
+                    </li>
+              {% else %}
+                    <li class="nav-item">
+                          <a class="nav-link text-white" href="{% url 'customer:search_time_slot' %}">Book Time Slot</a>
+                    </li>
+                    <li class="nav-item">
+                          <a class="nav-link text-white" href="{% url 'customer:book'%}">Booking History</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle text-white" href="#"  data-toggle="dropdown">
+                        {{user.username}}
+                      </a>
+                      <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{% url 'accounts:profile'%}"><i class="fa fa-user"></i> Profile</a>
+                        <a class="dropdown-item" href="{% url 'password_change'%}"><i class="fa fa-key"></i> Change Password</a>
+                        <a class="dropdown-item" href="#">
+                          <i class="fa fa-power-off"></i>
+                          <span class="user-avatar" onClick="document.getElementById('logoutForm1').submit()">Logout</span>
+                          <form id="logoutForm1" method="POST" action="{% url 'logout' %}">
+                          {% csrf_token %}
+                          <input type="hidden">
+                          </form>
+                        </a>
+                      </div>
+                    </li>
+              {% endif %}
+          {% else %}
+          <li class="nav-item">
+            <a class="nav-link text-white" href="{% url 'customer:search_time_slot' %}">Search Time Slot</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-white" href="#" id="navbardrop" data-toggle="dropdown">
+              Signup
+            </a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="{% url 'accounts:customer_signup'%}">Customer</a>
+              <a class="dropdown-item" href="{% url 'accounts:manager_signup'%}">Manager</a>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="{% url 'login'%}">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="/#contact">Contact</a>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>

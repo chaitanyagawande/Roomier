@@ -1,0 +1,26 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>404 Page</title>
+    {% include 'base.html' %}
+    <style>
+        .masthead{
+            background-image: url('/static/images/404.jpg');
+        }
+    </style>
+</head>
+
+<body id="page-top">
+  {% include 'navbar.html' %}
+  <header class="masthead">
+    <div class="container d-flex h-100 align-items-center">
+      <div class="mx-auto text-center"></div>
+    </div>
+  </header>
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/grayscale.min.js' %}"></script>
+</body>

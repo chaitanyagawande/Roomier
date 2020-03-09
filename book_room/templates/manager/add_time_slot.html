@@ -1,0 +1,117 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Add Time Slot</title>
+        {% include 'base.html'%}
+        {% include 'navbar.html' %}
+   </head>
+<div class="container mt-5 pt-4">
+    <div class="row">
+        <div class="col-lg-3"></div>
+        <div class="col-lg-6">
+            <div class="mt-3">
+
+                <br>
+            {% if messages %}
+              {% for message in messages %}
+              <div class="alert alert-warning alert-dismissible text-center" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="cursor:pointer"><span aria-hidden="true">&times;</span></button>
+                <strong>{% if message.level == DEFAULT_MESSAGE_LEVELS.INFO %}Info{% else %}{{ message.tags|title }}{% endif %}!</strong> {{ message }}
+              </div>
+              {% endfor %}
+            {% endif %}
+
+            <div class="alert alert-dark" role="alert">
+              <a href="/manager/create_room/" class="alert-link">/ Manager / Create_Room</a>
+            </div>
+
+            </div>
+        </div>
+        <div class="col-lg-3"></div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-title">
+                    <h4>Add Time Slot</h4>
+                    <br><br>
+                </div>
+                <div class="card-body">
+                    <div class="basic-form">
+                        <form method="post">
+                             {% csrf_token %}
+                            <input type="hidden" name="next" value="{{ next }}">
+                            <div class="form-group">
+                                <label>Start Time</label>
+                                <input type="time" name="start_time" class="form-control" value="12:00"  required>
+                            </div>
+                            <div class="form-group">
+                                <label>End Time</label>
+                                <input type="time" name="end_time" class="form-control" value="15:00"  required>
+                            </div>
+                            <button type="submit" class="button btn-success" style="cursor:pointer">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card">
+              <div class="card-title">
+                <h4> List Of Time Slots </h4>
+              </div>
+              <div class="card-body">
+                  {% if time_slot %}
+                <div class="table-responsive">
+                  <table class="table table-hover ">
+                    <thead>
+                      <tr>
+                        <th>Start Time</th>
+                        <th>End Time</th>
+                          <th>Edit</th>
+                          <th>Delete</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    {% for x in time_slot %}
+                      <tr>
+                          <td>{{x.start_time | time:'H:i:s'}}</td>
+                          <td>{{x.end_time | time:'H:i:s'}}</td>
+                          <td>
+                              <span>
+                                  <a href="{% url 'manager:update_slot' room_id=x.room_id.id  slot_id=x.id %}" class="button button-primary">Edit</a>
+                              </span>
+                          </td>
+                          <td>
+                              <form action="{% url 'manager:delete_slot' room_id=x.room_id.id  slot_id=x.id %}" method="POST">
+                                {% csrf_token %}
+                                  <input type="hidden" name="room_id" value="{{x.room_id.id}}">
+                                  <input type="submit" class="button btn-warning" style="cursor:pointer;" value="Delete">
+                              </form>
+                          </td>
+                      </tr>
+                    {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+                {% else %}
+                  <br>
+                        <p>No Time Slot Available.</p>
+                  {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+      {% include 'manager/scripts.html'%}
+<script>
+$(document).ready(function() {
+    setTimeout(function() {
+        $(".alert").hide();
+    }, 5000);
+});
+</script>

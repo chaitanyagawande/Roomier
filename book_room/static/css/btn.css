@@ -1,0 +1,19 @@
+.button {
+  border: none;
+  color: white;
+  padding: 8px 12px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius:5px;
+}
+.button-success{
+background-color:#1E7E34;
+}
+.button-primary{
+background-color:#2549FE;
+}
+.button-warning{
+background-color:#1E7E34;
+}

@@ -1,9 +1,10 @@
 from django.db import models
-
+import uuid
 from accounts.models import User
 
 
 class Room(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     room_owner = models.ForeignKey(User, on_delete=models.CASCADE)
     room_name = models.CharField(max_length=10, null=False)
 
@@ -18,6 +19,7 @@ class Room(models.Model):
 
 
 class TimeSlot(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     room_id = models.ForeignKey(Room, on_delete=models.CASCADE)
     time_slot_owner = models.ForeignKey(User, on_delete=models.CASCADE)
     start_time = models.TimeField(null=False)
@@ -31,6 +33,7 @@ class TimeSlot(models.Model):
 
 
 class AdvanceBooking(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     manager_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name="room_manager_id")
     no_of_days = models.IntegerField(null=False, default=15, blank=False)
 

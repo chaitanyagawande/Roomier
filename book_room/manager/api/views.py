@@ -1,36 +1,36 @@
 from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView, DestroyAPIView, RetrieveUpdateAPIView
-from manager.models import Room, TimeSlot
+from manager.models import Room, TimeSlot, AdvanceBooking
 from accounts.models import User
 from .serializers import RoomSerializer, TimeSlotSerializer, BookSerializer, CancelSerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from customer.models import TimeSlotBook, TimeSlotCancel
-from .permissions import IsManager, UserObjectPermission
+from .permissions import IsManager
 
 class RoomCreateAPIView(CreateAPIView):
     queryset = Room.objects.all()
     serializer_class = RoomSerializer
-    permission_classes = (IsAuthenticated, )
+    permission_classes = (IsAuthenticated, IsManager)
 
     def perform_create(self, serializer):
         serializer.save(room_owner=User.objects.get(id=self.request.user.id))
 
 class RoomListAPIView(ListAPIView):
     serializer_class = RoomSerializer
-    permission_classes = (IsAuthenticated, IsManager, UserObjectPermission)
+    permission_classes = (IsAuthenticated, IsManager)
  
     def get_queryset(self, **kwargs):
         return Room.objects.filter(room_owner=User.objects.get(id=self.request.user.id))
 
 class RoomDetailAPIView(RetrieveAPIView):
     serializer_class = RoomSerializer
-    permission_classes = (IsAuthenticated, IsManager, UserObjectPermission)
+    permission_classes = (IsAuthenticated, IsManager)
 
     def get_queryset(self, **kwargs):
         return Room.objects.filter(room_owner=User.objects.get(id=self.request.user.id))
 
 class RoomDeleteAPIView(DestroyAPIView):
     serializer_class = RoomSerializer
-    permission_classes = (IsAuthenticated, )
+    permission_classes = (IsAuthenticated, IsManager, )
 
     def get_queryset(self, **kwargs):
         return Room.objects.filter(room_owner=User.objects.get(id=self.request.user.id))
@@ -40,28 +40,28 @@ class RoomDeleteAPIView(DestroyAPIView):
 class TimeSlotCreateAPIView(CreateAPIView):
     queryset = TimeSlot.objects.all()
     serializer_class = TimeSlotSerializer
-    permission_classes = (IsAuthenticated, )
+    permission_classes = (IsAuthenticated, IsManager, )
 
     def perform_create(self, serializer):
         serializer.save(time_slot_owner=User.objects.get(id=self.request.user.id), room_id=Room.objects.get(id=self.kwargs['room_id']))
 
 class TimeSlotListAPIView(ListAPIView):
     serializer_class = TimeSlotSerializer
-    permission_classes = (IsAuthenticated, )
+    permission_classes = (IsAuthenticated, IsManager, )
  
     def get_queryset(self, **kwargs):
         return TimeSlot.objects.filter(time_slot_owner=User.objects.get(id=self.request.user.id), room_id=Room.objects.get(id=self.kwargs['pk']))
 
 class TimeSlotDetailAPIView(RetrieveAPIView):
     serializer_class = TimeSlotSerializer
-    permission_classes = (IsAuthenticated, )
+    permission_classes = (IsAuthenticated, IsManager, )
 
     def get_queryset(self, **kwargs):
         return TimeSlot.objects.filter(time_slot_owner=User.objects.get(id=self.request.user.id), room_id=Room.objects.get(id=self.kwargs['room_id']))
 
 class TimeSlotUpdateAPIView(RetrieveUpdateAPIView):
     serializer_class = TimeSlotSerializer
-    permission_classes = (IsAuthenticated, )
+    permission_classes = (IsAuthenticated, IsManager, )
 
     def get_queryset(self, **kwargs):
         return TimeSlot.objects.filter(time_slot_owner=User.objects.get(id=self.request.user.id))
@@ -69,7 +69,7 @@ class TimeSlotUpdateAPIView(RetrieveUpdateAPIView):
 
 class TimeSlotDeleteAPIView(DestroyAPIView):
     serializer_class = TimeSlotSerializer
-    permission_classes = (IsAuthenticated, )
+    permission_classes = (IsAuthenticated, IsManager, )
 
     def get_queryset(self, **kwargs):
         return TimeSlot.objects.filter(time_slot_owner=User.objects.get(id=self.request.user.id))
@@ -78,14 +78,14 @@ class TimeSlotDeleteAPIView(DestroyAPIView):
 # Booked Time Slot History, Manager'
 class BookTimeSlotAPIView(ListAPIView):
     serializer_class = BookSerializer
-    permission_classes = (IsAuthenticated, )
+    permission_classes = (IsAuthenticated, IsManager, )
 
     def get_queryset(self, **kwargs):
         return TimeSlotBook.objects.filter(manager_id=User.objects.get(id=self.request.user.id))
 
 class CancelTimeSlotAPIView(ListAPIView):
     serializer_class = CancelSerializer
-    permission_classes = (IsAuthenticated, )
+    permission_classes = (IsAuthenticated, IsManager, )
 
     def get_queryset(self, **kwargs):
         return TimeSlotCancel.objects.filter(manager_id=User.objects.get(id=self.request.user.id))

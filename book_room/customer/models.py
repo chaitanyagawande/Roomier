@@ -1,9 +1,11 @@
 from django.db import models
 from accounts.models import User
 from manager.models import Room
+import uuid
 
 
 class TimeSlotBook(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     manager_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name="manager_id")
     customer_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name="customer_id")
     date = models.DateField(null=False)
@@ -19,6 +21,7 @@ class TimeSlotBook(models.Model):
 
 
 class TimeSlotCancel(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     manager_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name="manger_id_cancel")
     customer_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name="customer_id_cancel")
     date = models.DateField(null=False)

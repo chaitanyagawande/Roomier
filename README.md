@@ -159,9 +159,9 @@ $ curl -X PUT --data '{"old_password":"secret_pass", "new_password":"secret_pass
 Login again with new password to obtain new token.
 ```
 
-2. Manager Endpoints
-Execute command and store output into variable
+#### 2. Manager Endpoints
 
+Execute command and store output into variable
 ```
 $ TOKEN=$(curl -X POST -d username=user_username -d password=secret_pass -H 'Accept: application/json; indent=4' http://127.0.0.1:8000/api/accounts/login/ | jq -r '.token')
 check whether password is correct or not because change password api endpoint changes the password.
@@ -255,7 +255,8 @@ $ curl -X POST -d no_of_days=50 -H 'Authorization: Token '"$TOKEN"'' -H 'Accept:
 }
 ```
 
-3. Customer Endpoints
+#### 3. Customer Endpoints
+
 Execute command and store output into variable
 ```
 $ TOKEN=$(curl -X POST -d username=user_username1 -d password=secret_pass1 -H 'Accept: application/json; indent=4' http://127.0.0.1:8000/api/accounts/login/ | jq -r '.token')

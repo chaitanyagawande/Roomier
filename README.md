@@ -60,8 +60,7 @@ $ python3 manage.py migrate
 $ python3 manage.py collectstatic
 ```
 
-4.  Running
-Run the application, running on localhost.
+4. Run the application, running on localhost.
 ```
 $ python3 manage.py runserver
 ```

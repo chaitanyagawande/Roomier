@@ -1,6 +1,6 @@
 from django.conf.urls import url
 from django.urls import path, include
-from .views import RoomListAPIView, RoomDetailAPIView, RoomCreateAPIView, RoomDeleteAPIView, BookTimeSlotAPIView, CancelTimeSlotAPIView
+from .views import RoomListAPIView, RoomDetailAPIView, RoomCreateAPIView, RoomDeleteAPIView, BookTimeSlotAPIView, CancelTimeSlotAPIView, EditAdvanceDayAPIView
 from .views import TimeSlotListAPIView, TimeSlotDetailAPIView, TimeSlotDeleteAPIView, TimeSlotUpdateAPIView, TimeSlotCreateAPIView
 
 urlpatterns = [
@@ -16,4 +16,5 @@ urlpatterns = [
     # Booking History urls
     path('bookedtimeslot/', BookTimeSlotAPIView.as_view(), name="booked_time_slot"),
     path('cancelledtimeslot/', CancelTimeSlotAPIView.as_view(), name="cancelled_time_slot"),
+    path('edit_advance_days/', EditAdvanceDayAPIView.as_view(), name="edit_advance_days"),
 ]

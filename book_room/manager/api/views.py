@@ -1,10 +1,15 @@
-from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView, DestroyAPIView, RetrieveUpdateAPIView
+from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView, DestroyAPIView, RetrieveUpdateAPIView, UpdateAPIView
 from manager.models import Room, TimeSlot, AdvanceBooking
 from accounts.models import User
-from .serializers import RoomSerializer, TimeSlotSerializer, BookSerializer, CancelSerializer
+from .serializers import RoomSerializer, TimeSlotSerializer, BookSerializer, CancelSerializer, AdvanceBookingSerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from customer.models import TimeSlotBook, TimeSlotCancel
 from .permissions import IsManager
+from rest_framework import status
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.decorators import api_view, permission_classes
+from django.views.decorators.csrf import csrf_exempt
 
 class RoomCreateAPIView(CreateAPIView):
     queryset = Room.objects.all()
@@ -90,3 +95,14 @@ class CancelTimeSlotAPIView(ListAPIView):
     def get_queryset(self, **kwargs):
         return TimeSlotCancel.objects.filter(manager_id=User.objects.get(id=self.request.user.id))
 
+
+class EditAdvanceDayAPIView(APIView):
+    permission_classes = (IsAuthenticated, IsManager)
+
+    def post(self, request):
+        serializer = request.data
+        no_of_days = serializer.get('no_of_days', None)
+        user = AdvanceBooking.objects.get(manager_id=request.user)
+        user.no_of_days = no_of_days
+        user.save()
+        return Response({"message": "Updated Successfully."}, status=status.HTTP_200_OK)

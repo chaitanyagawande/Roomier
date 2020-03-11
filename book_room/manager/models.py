@@ -33,7 +33,6 @@ class TimeSlot(models.Model):
 
 
 class AdvanceBooking(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     manager_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name="room_manager_id")
     no_of_days = models.IntegerField(null=False, default=15, blank=False)
 

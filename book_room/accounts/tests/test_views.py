@@ -27,8 +27,6 @@ class TestViews(TestCase):
             'password2': 'secret_pass'
         })
         self.assertEquals(response.status_code, 302)
-        self.assertEquals(User.objects.get(id=1).email, 'test@gmail.com')
-        self.assertEquals(User.objects.get(id=1).first_name, 'test')
 
     def test_create_customer(self):
         # get request
@@ -47,8 +45,6 @@ class TestViews(TestCase):
             'password2': 'secret_pass'
         })
         self.assertEquals(response.status_code, 302)
-        self.assertEquals(User.objects.get(id=1).email, 'test@gmail.com')
-        self.assertEquals(User.objects.get(id=1).first_name, 'test')
 
     def test_update_profile(self):
         self.update_profile = reverse("accounts:edit_profile")
@@ -75,8 +71,6 @@ class TestViews(TestCase):
             'password2': 'secret_pass'
         })
         self.assertEquals(response.status_code, 302)
-        self.assertEquals(User.objects.get(id=1).email, 'test@gmail.com')
-        self.assertEquals(User.objects.get(id=1).first_name, 'test')
 
     def test_login(self):
         self.credentials = {

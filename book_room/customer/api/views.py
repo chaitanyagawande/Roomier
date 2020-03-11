@@ -15,6 +15,7 @@ class SearchAPIView(ListAPIView):
         date = self.request.query_params.get("date")
         start_time = self.request.query_params.get("start_time")
         end_time = self.request.query_params.get("end_time")
+        print(date)
         return TimeSlot.objects.filter(start_time=start_time, end_time=end_time)
 
 

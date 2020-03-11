@@ -50,7 +50,7 @@ def get_user_profile(request):
     user = User.objects.get(username=request.user.username)
     if user.is_manager:
         adb = AdvanceBooking.objects.get(manager_id=request.user)
-        return render(request, 'profile.html', {"user": user, 'no_of_days': adb})
+        return render(request, 'profile.html', {"user": user, "no_of_days":adb})
     else:
         return render(request, 'profile.html', {"user": user})
 

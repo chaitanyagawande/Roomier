@@ -6,10 +6,6 @@ A simple, responsive  website developed to help the customer for booking time sl
 
 A customize website which helps customer to aid customer to book time slot and it also allows the manager to provide room on rent for particular time slot. 
 
-### User Information on https://yaksh.fossee.in/
-Username : cc600200 <br />
-Email    : cgawande12@gmail.com
-
 ### Features
 
 ##### Types Of User:
